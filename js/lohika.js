@@ -7,7 +7,12 @@ function suriinAngTitik(ORIHINAL_NA_SALITA) {
 		for (var x = 3; x > 0; x--) {
 			NASURI_NA_TITIK = ORIHINAL_NA_SALITA.substring(i, i + x);
 
-			if (NASURI_NA_TITIK in alpabeto || NASURI_NA_TITIK == " ") {
+			//Ginagawang space ang di makitang titik kapag ang "x" ay 1.
+			if (!(NASURI_NA_TITIK in alpabeto) && x == 1) {
+				NASURI_NA_TITIK = " ";
+			}
+
+			if (NASURI_NA_TITIK == " " || (NASURI_NA_TITIK in alpabeto)) {
 				NASALIN_NA_TITIK += (NASURI_NA_TITIK == " ") ? " " : alpabeto[NASURI_NA_TITIK];
 				
 				TAGATUKOY += NASURI_NA_TITIK;
