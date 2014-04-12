@@ -1,0 +1,39 @@
+@font-face {
+	font-family: Tagalog Stylized;
+	src: url("font/TAGSTYLE.TTF");
+}
+
+body {
+	background-color: #000000;
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #ffffff;
+    text-align: center;
+}
+
+article {
+	text-align: center;
+}
+
+#baybayin {
+	background-color: #000000;
+	font-family: Tagalog Stylized;
+	font-size: 35px;
+	color: #ffffff;
+	width: 500px;
+	height: 100px;
+	border-color: #000000;
+}
+
+#karaniwang {
+	background-color: #000000;
+	font-family: verdana, arial, sans-serif;
+	font-size: 25px;
+	color: #ffffff;
+	width: 500px;
+	height: 100px;
+}
+
+.warning {
+	color: #01DF01;
+}
