@@ -17,9 +17,9 @@ function suriinAngTitik(ORIHINAL_NA_SALITA, MOD_O_TRA) {
 				switch(parseInt(MOD_O_TRA)) {
 					case 1:
 						if (alpabeto[NASURI_NA_TITIK].indexOf("+") !== -1) {
-							NASALIN_NA_TITIK += " ";
+							NASALIN_NA_TITIK += "";
 						} else {
-							NASALIN_NA_TITIK += alpabeto[NASURI_NA_TITIK];
+							NASALIN_NA_TITIK += (NASURI_NA_TITIK == " ") ? " " : alpabeto[NASURI_NA_TITIK];
 						}
 						break;
 					case 2:
