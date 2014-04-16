@@ -31,7 +31,7 @@
 					var fontWeight = "normal";
 					var fontStyle = "normal";
 
-					var theCanvas = $("#canvasOne")[0];
+					var theCanvas = $("#canvas")[0];
 					var context = theCanvas.getContext("2d"); 
 
 					$("#lakiNgFont").change(function() {
@@ -57,13 +57,13 @@
 						context.strokeRect(5,  5, theCanvas.width-10, theCanvas.height-10);
 						context.font = fontSize + "px " + fontFace;
 
-						var metrics = context.measureText(message);
+						var metrics = context.measureText(message.trim());
 						var textWidth = metrics.width;
 						var xPosition = (theCanvas.width/2) - (textWidth/2);
 						var yPosition = (theCanvas.height/2);
 
 						context.fillStyle = "#9BCC60";
-				   	 	context.fillText(message,  xPosition ,yPosition);	
+				   	 	context.fillText(message.trim(),  xPosition ,yPosition);	
 
 				   	 	$("#download").attr("href", theCanvas.toDataURL());
 					}
@@ -94,7 +94,7 @@
 		</div>
 		<p>Nasalin na salita</p>
 
-		<canvas id="canvasOne" width="500" height="300">
+		<canvas id="canvas" width="500" height="300">
 			Hindi sinusuportahan ng iyong browser ang HTML 5 Canvas. 
 		</canvas>
 		<br />
