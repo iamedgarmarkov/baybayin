@@ -2,9 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Isalin sa Baybayin</title>
+		<title>Baybayin :: Mikael Romo</title>
 		<link rel="stylesheet" href="css/jquery-ui-1.10.4.css">
 		<link rel="stylesheet" href="css/estilo.css">
+		<script src="js/modernizr.js"></script>
 		<script src="js/jquery-1.10.2.js"></script>
 		<script src="js/jquery-ui-1.10.4.js"></script>
 		<script src="js/alpabeto.js"></script>
@@ -12,25 +13,85 @@
 
 		<script>
 			$(document).ready(function() {
-				$("#karaniwang").keyup(function() {
-					var ORIHINAL_NA_SALITA = $("#karaniwang").val();
-					$("#baybayin").val(suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase()));
-				});
+				Pasimula();
+
+				function SuportaSaCanvas() {
+				  	return Modernizr.canvas;
+				}
+
+				function Pasimula() {
+					if (!SuportaSaCanvas()) {
+						return;
+					}
+						
+					var fontSize = "35";
+					var fontFace = "Baybayin";
+					var fontWeight = "normal";
+					var fontStyle = "normal";
+
+					var theCanvas = $("#canvasOne")[0];
+					var context = theCanvas.getContext("2d"); 
+
+					$("#lakiNgFont").change(function() {
+						fontSize = this.value;
+
+						theCanvas.width = 500 + parseInt($("#lakiNgFont").val());
+
+						GuhintinAngTabing();
+					});
+
+					$("#karaniwang").keyup(function() {
+						var ORIHINAL_NA_SALITA = $("#karaniwang").val();
+						message = suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase());
+
+						GuhintinAngTabing();
+					});
+					
+					function GuhintinAngTabing() {
+
+						context.fillStyle = "#000000";
+						context.fillRect(0, 0, theCanvas.width, theCanvas.height);
+						context.strokeStyle = "#ffffff"; 
+						context.strokeRect(5,  5, theCanvas.width-10, theCanvas.height-10);
+						context.font = fontSize + "px " + fontFace;
+
+						var metrics = context.measureText(message);
+						var textWidth = metrics.width;
+						var xPosition = (theCanvas.width/2) - (textWidth/2);
+						var yPosition = (theCanvas.height/2);
+
+						context.fillStyle = "#ffffff";
+				   	 	context.fillText(message,  xPosition ,yPosition);	
+
+				   	 	$("#download").attr("href", theCanvas.toDataURL());
+					}
+				}
 			});
 		</script>
 	</head>
 
 	<body>
 		<header>
-			<h1>Baybayin</h1>
+			<h1>Isalin sa Baybayin</h1>
 			<h5>Ginawa ni Mikael Romo</h5>
 		</header>
-		<br>
-		<p>Ilagay ang nais na salita</p>
-		<textarea class="ui-widget ui-state-default ui-corner-all" id="karaniwang" rows="4" cols="50"></textarea>
 		<br />
+		<textarea class="ui-widget ui-state-default ui-corner-all" id="karaniwang" rows="4" cols="50" maxlength="13" size="13" placeholder="Ilagay ang nais na salita"></textarea>
+		<br />
+		<div>
+			<p>
+				Laki ng Font: 
+				<br />
+				<input type="range" id="lakiNgFont" min="0" max="200" step="1" value="35"/>
+			</p>
+		</div>
 		<p>Nasalin na salita</p>
-		<textarea class="ui-widget ui-state-default ui-corner-all" id="baybayin" rows="4" cols="50" disabled></textarea>
+
+		<canvas id="canvasOne" width="500" height="300">
+			Hindi sinusuportahan ng iyong browser ang HTML 5 Canvas. 
+		</canvas>
+		<br />
+		<a href="#" id="download" download="baybayin.png">Kunin ang Image</a>
 
 		<article>
 		<p>
