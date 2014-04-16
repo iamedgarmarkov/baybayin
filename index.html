@@ -13,6 +13,8 @@
 
 		<script>
 			$(document).ready(function() {
+				$("#radioset").buttonset();
+
 				Pasimula();
 
 				function SuportaSaCanvas() {
@@ -42,7 +44,7 @@
 
 					$("#karaniwang").keyup(function() {
 						var ORIHINAL_NA_SALITA = $("#karaniwang").val();
-						message = suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase());
+						message = suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase(), $("input[name=radio]:checked").val());
 
 						GuhintinAngTabing();
 					});
@@ -51,7 +53,7 @@
 
 						context.fillStyle = "#000000";
 						context.fillRect(0, 0, theCanvas.width, theCanvas.height);
-						context.strokeStyle = "#ffffff"; 
+						context.strokeStyle = "#9BCC60"; 
 						context.strokeRect(5,  5, theCanvas.width-10, theCanvas.height-10);
 						context.font = fontSize + "px " + fontFace;
 
@@ -60,7 +62,7 @@
 						var xPosition = (theCanvas.width/2) - (textWidth/2);
 						var yPosition = (theCanvas.height/2);
 
-						context.fillStyle = "#ffffff";
+						context.fillStyle = "#9BCC60";
 				   	 	context.fillText(message,  xPosition ,yPosition);	
 
 				   	 	$("#download").attr("href", theCanvas.toDataURL());
@@ -75,6 +77,11 @@
 			<h1>Isalin sa Baybayin</h1>
 			<h5>Ginawa ni Mikael Romo</h5>
 		</header>
+		<br />
+		<div id="radioset">
+			<input type="radio" id="radio1" name="radio" value="1"><label for="radio1">Tradisyonal</label>
+			<input type="radio" id="radio2" name="radio" value="2" checked="checked"><label for="radio2">Makabago</label>
+		</div>
 		<br />
 		<textarea class="ui-widget ui-state-default ui-corner-all" id="karaniwang" rows="4" cols="50" maxlength="13" size="13" placeholder="Ilagay ang nais na salita"></textarea>
 		<br />
@@ -91,7 +98,7 @@
 			Hindi sinusuportahan ng iyong browser ang HTML 5 Canvas. 
 		</canvas>
 		<br />
-		<a href="#" id="download" download="baybayin.png">Kunin ang Image</a>
+		<a href="#" class="ui-widget ui-state-default ui-corner-all" id="download" download="baybayin.png">[ Kunin ang Larawan ]</a>
 
 		<article>
 		<p>
