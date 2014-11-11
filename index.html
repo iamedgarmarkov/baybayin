@@ -33,7 +33,9 @@
 
 					var theCanvas = $("#canvas")[0];
 					var context = theCanvas.getContext("2d"); 
-
+                    
+                    Pagsasalin();
+                    
 					$("#lakiNgFont").change(function() {
 						fontSize = this.value;
 
@@ -43,12 +45,16 @@
 					});
 
 					$("#karaniwang").keyup(function() {
+                        Pagsasalin();
+					});
+					
+                    function Pagsasalin() {
 						var ORIHINAL_NA_SALITA = $("#karaniwang").val();
 						message = suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase(), $("input[name=radio]:checked").val());
 
-						GuhintinAngTabing();
-					});
-					
+						GuhintinAngTabing();                    
+                    }
+                    
 					function GuhintinAngTabing() {
 
 						context.fillStyle = "#000000";
