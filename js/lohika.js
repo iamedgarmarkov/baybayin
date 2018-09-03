@@ -9,6 +9,10 @@ function Baybayin() {
             if (p_salita.length > 0) {
                 let c_salita = p_salita.split("");
                 for (var c = 0; c < c_salita.length; c++) {
+                    if (typeof(alpabeto[c_salita[c]]) === "undefined") {
+                        continue;
+                    }
+
                     let lapit_titik = c_salita[c + 1];
 
                     if (typeof(lapit_titik) === "undefined") {
