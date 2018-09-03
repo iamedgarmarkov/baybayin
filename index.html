@@ -47,7 +47,6 @@
                     var trad_o_mode = parseInt($("input[name=trad_o_mode]:checked").val());
                     mensahe = baybayin.isalin_ang_salita(orihinal_na_salita.toLowerCase(), (trad_o_mode === 1 ? true : false));
 
-                    console.log(mensahe);
                     kasangkapan.guhintin_ang_tabing(ang_kuwadro, konteksto, mensahe);
                 }
 			});
