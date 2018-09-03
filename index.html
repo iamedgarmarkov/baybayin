@@ -9,71 +9,47 @@
 		<script src="js/jquery-1.10.2.js"></script>
 		<script src="js/jquery-ui-1.10.4.js"></script>
 		<script src="js/alpabeto.js"></script>
+        <script src="js/kasangkapan.js"></script>
 		<script src="js/lohika.js"></script>
 
 		<script>
 			$(document).ready(function() {
 				$("#radioset").buttonset();
 
-				Pasimula();
+                var baybayin = new Baybayin();
+                var kasangkapan = new Kasangkapan();
 
-				function SuportaSaCanvas() {
-				  	return Modernizr.canvas;
-				}
+                var ang_kuwadro = $("#canvas")[0];
+                var konteksto = ang_kuwadro.getContext("2d");
+                var mensahe = "";
 
-				function Pasimula() {
-					if (!SuportaSaCanvas()) {
-						return;
-					}
-						
-					var fontSize = "35";
-					var fontFace = "Baybayin";
-					var fontWeight = "normal";
-					var fontStyle = "normal";
+                if (kasangkapan.pasimula()) {
+                    kasangkapan.guhintin_ang_tabing(ang_kuwadro, konteksto, mensahe);
+                }
 
-					var theCanvas = $("#canvas")[0];
-					var context = theCanvas.getContext("2d"); 
-                    
-                    Pagsasalin();
-                    
-					$("#lakiNgFont").change(function() {
-						fontSize = this.value;
+                $("input[name=trad_o_mode]").click(function() {
+                    isalin_ang_salita();
+                });
 
-						theCanvas.width = 500 + parseInt($("#lakiNgFont").val());
+                $("#salitang_isasalin").keyup(function() {
+                    isalin_ang_salita();
+                });
 
-						GuhintinAngTabing();
-					});
+                $("#laki_ng_font").change(function() {
+                    kasangkapan.katangian.fontSize = this.value;
+                    ang_kuwadro.height = 300 + parseInt($("#laki_ng_font").val());
+                    ang_kuwadro.width  = 700 + parseInt($("#laki_ng_font").val());
+                    isalin_ang_salita();
+                });
 
-					$("#karaniwang").keyup(function() {
-                        Pagsasalin();
-					});
-					
-                    function Pagsasalin() {
-						var ORIHINAL_NA_SALITA = $("#karaniwang").val();
-						message = suriinAngTitik(ORIHINAL_NA_SALITA.toLowerCase(), $("input[name=radio]:checked").val());
+                function isalin_ang_salita() {
+                    var orihinal_na_salita = $("#salitang_isasalin").val();
+                    var trad_o_mode = parseInt($("input[name=trad_o_mode]:checked").val());
+                    mensahe = baybayin.isalin_ang_salita(orihinal_na_salita.toLowerCase(), (trad_o_mode === 1 ? true : false));
 
-						GuhintinAngTabing();                    
-                    }
-                    
-					function GuhintinAngTabing() {
-
-						context.fillStyle = "#000000";
-						context.fillRect(0, 0, theCanvas.width, theCanvas.height);
-						context.strokeStyle = "#9BCC60"; 
-						context.strokeRect(5,  5, theCanvas.width-10, theCanvas.height-10);
-						context.font = fontSize + "px " + fontFace;
-
-						var metrics = context.measureText(message.trim());
-						var textWidth = metrics.width;
-						var xPosition = (theCanvas.width/2) - (textWidth/2);
-						var yPosition = (theCanvas.height/2);
-
-						context.fillStyle = "#9BCC60";
-				   	 	context.fillText(message.trim(),  xPosition ,yPosition);	
-
-				   	 	$("#download").attr("href", theCanvas.toDataURL());
-					}
-				}
+                    console.log(mensahe);
+                    kasangkapan.guhintin_ang_tabing(ang_kuwadro, konteksto, mensahe);
+                }
 			});
 		</script>
 	</head>
@@ -84,23 +60,23 @@
 		</header>
 		<br />
 		<div id="radioset">
-			<input type="radio" id="radio1" name="radio" value="1"><label for="radio1">Tradisyonal</label>
-			<input type="radio" id="radio2" name="radio" value="2" checked="checked"><label for="radio2">Makabago</label>
+			<input type="radio" id="radio1" name="trad_o_mode" value="1"><label for="radio1">Tradisyonal</label>
+			<input type="radio" id="radio2" name="trad_o_mode" value="2" checked="checked"><label for="radio2">Makabago</label>
 		</div>
 		<br />
-		<textarea class="ui-widget ui-state-default ui-corner-all" id="karaniwang" rows="4" cols="50" maxlength="13" size="13" placeholder="Ilagay ang nais na salita"></textarea>
+		<textarea class="ui-widget ui-state-default ui-corner-all" id="salitang_isasalin" rows="4" cols="50" maxlength="13" size="13" placeholder="Ilagay ang nais na salita"></textarea>
 		<br />
 		<div>
 			<p>
-				Laki ng Font: 
+				Laki ng Font:
 				<br />
-				<input type="range" id="lakiNgFont" min="0" max="200" step="1" value="35"/>
+				<input type="range" id="laki_ng_font" min="35" max="200" step="1" value="35"/>
 			</p>
 		</div>
 		<p>Nasalin na salita</p>
 
-		<canvas id="canvas" width="500" height="300">
-			Hindi sinusuportahan ng iyong browser ang HTML 5 Canvas. 
+		<canvas id="canvas" width="700" height="300">
+			Hindi sinusuportahan ng iyong browser ang HTML 5 Canvas.
 		</canvas>
 		<br />
 		<a href="#" class="ui-widget ui-state-default ui-corner-all" id="download" download="baybayin.png">[ Kunin ang Larawan ]</a>
